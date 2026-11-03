@@ -1653,7 +1653,7 @@ try { if (!localStorage.getItem('reelvault.theme.m1')) { localStorage.removeItem
   var backend = { col: null, ready: false, failed: false };
   var dirty = new Set(), deleting = new Set(), timers = new Map(), chains = new Map();
   var firstSnap = true, settled = false, toastTimer = 0;
-  var ui = { stack: [{ v: 'home' }], me: { name: '', avatar: '' }, draft: { poster: null }, confirm: '', about: false, posterTarget: null, sel: {}, canFill: false };
+  var ui = { stack: [{ v: 'home' }], me: { name: 'Movie lover', avatar: '' }, unlocked: true, draft: { poster: null }, confirm: '', about: false, posterTarget: null, sel: {}, canFill: false };
 
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
@@ -2129,7 +2129,7 @@ try { if (!localStorage.getItem('reelvault.theme.m1')) { localStorage.removeItem
   }
 
   /* ---------- Login (this device) ---------- */
-  var STANDALONE = !(window.claude && window.claude.use);
+  var STANDALONE = false;
   var LS_ACCT = 'reelvault.acct';
   function acct() { try { return JSON.parse(lsGet(LS_ACCT) || 'null'); } catch (e) { return null; } }
   function hex(buf) { return Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }
@@ -2167,7 +2167,8 @@ try { if (!localStorage.getItem('reelvault.theme.m1')) { localStorage.removeItem
       '<input type="' + type + '" id="' + id + '" placeholder="' + ph + '" autocomplete="' + auto + '" autocapitalize="off" spellcheck="false" ' + (extra || '') + '></span>' +
       (eye ? '<button type="button" class="eye" data-act="eye" aria-label="Show password" aria-pressed="false">' + ic('eye') + '</button>' : '') + '</div>';
   }
-  function vLock() {
+  function vLock() { return ""; }
+  function _vLock_disabled() {
     var a = acct(), h = '<section class="auth m3auth"><i class="ab ab1"></i><i class="ab ab2"></i><div class="abrand">' + logoImg('alogo') + '<b>Movie <span>Vault</span></b></div><h1>Login</h1>';
     h += '<p class="anote">' + (a ? 'Welcome back. Log in to open your lists.' : 'New here? Register below. Already registered on another phone? Log in with your email and password.') + '</p>';
     h += '<form id="loginForm" class="aform acard" novalidate><div class="aerr" id="lerr" role="alert" hidden></div>' +
@@ -3614,7 +3615,7 @@ try { if (!localStorage.getItem('reelvault.theme.m1')) { localStorage.removeItem
     if (v.v !== 'profile') ui.editName = false;
     try { document.documentElement.classList.toggle('on-details', v.v === 'details'); document.documentElement.classList.toggle('on-profile', v.v === 'profile'); document.documentElement.classList.toggle('on-home', v.v === 'home'); } catch (e) {}
     var welcomed = lsGet(LS_WELCOME) === '1' || !!(docs.get('profile') && docs.get('profile').welcomed);
-    if (STANDALONE && !ui.unlocked) { screen.innerHTML = vLock(); nav.hidden = true; qTranslate(); return; }
+    ui.unlocked = true;
     if (!settled && !welcomed) h = '<section class="welcome">' + logoImg('logo') + '<h1>Movie <span>Vault</span></h1></section>';
     else if (!welcomed) h = vWelcome();
     else if (v.v === 'home') h = vHome();
