@@ -1,0 +1,19 @@
+# Node
+node_modules/
+npm-debug.log
+
+# Build outputs
+build/
+android/build/
+android/app/build/
+android/.gradle/
+.gradle/
+local.properties
+
+# Original APK & full decompile archive
+MovieVault.apk
+decompiled_src/
+
+# OS files
+.DS_Store
+Thumbs.db

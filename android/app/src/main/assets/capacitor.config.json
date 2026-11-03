@@ -1,0 +1,11 @@
+{
+	"appId": "com.reelvault.app",
+	"appName": "Movie Vault",
+	"webDir": "www",
+	"backgroundColor": "#09090D",
+	"plugins": {
+		"CapacitorHttp": {
+			"enabled": true
+		}
+	}
+}
